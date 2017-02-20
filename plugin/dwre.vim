@@ -30,13 +30,21 @@ function! DwreReset()
   execute ":sign define dwre text=>"
   execute ":sign unplace *"
 endfunction
-function! DwreDebug()
-  execute ":silent !dwre debug " . join(g:DWREBreakpoints)
-  execute ":redraw!"
+function! DwreDebug(...)
+  if a:0 == 1
+    execute ":silent !dwre --project " . a:1 . " debug " . join(g:DWREBreakpoints)
+    execute ":redraw!"
+  elseif a:0 == 2
+    execute ":silent !dwre --project " . a:1 . " --env " . a:2 . " debug " . join(g:DWREBreakpoints)
+    execute ":redraw!"
+  else
+    execute ":silent !dwre debug " . join(g:DWREBreakpoints)
+    execute ":redraw!"
+  end
 endfunction
 
 command! DWREAdd :call AddDwreBreakpoint()
 command! DWREDel :call DelDwreBreakpoint()
 command! DWREReset :call DwreReset()
-command! DWREDebug :call DwreDebug()
+command! -nargs=* DWREDebug :call DwreDebug(<f-args>)
 
