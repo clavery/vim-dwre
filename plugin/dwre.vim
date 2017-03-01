@@ -31,15 +31,30 @@ function! DwreReset()
   execute ":sign unplace *"
 endfunction
 function! DwreDebug(...)
+  if !exists("g:DWREBreakpoints")
+    let g:DWREBreakpoints = []
+  end  
   if a:0 == 1
-    execute ":silent !dwre --project " . a:1 . " debug " . join(g:DWREBreakpoints)
-    execute ":redraw!"
+    if has("gui_running")
+      execute ":silent !osascript -e 'tell app \"Terminal\"\do script \"cd " . getcwd() . "; dwre --env " . a:1 . " debug ". join(g:DWREBreakpoints) ."\"\activate\end tell'"
+    else
+      execute ":silent !dwre --env " . a:1 . " debug " . join(g:DWREBreakpoints)
+      execute ":redraw!"
+    end
   elseif a:0 == 2
-    execute ":silent !dwre --project " . a:1 . " --env " . a:2 . " debug " . join(g:DWREBreakpoints)
-    execute ":redraw!"
+    if has("gui_running")
+      execute ":silent !osascript -e 'tell app \"Terminal\"\do script \"cd " . getcwd() . "; dwre --project " . a:1 . " --env " . a:2 . " debug ". join(g:DWREBreakpoints) ."\"\activate\end tell'"
+    else
+      execute ":silent !dwre --project " . a:1 . " --env " . a:2 . " debug " . join(g:DWREBreakpoints)
+      execute ":redraw!"
+    end
   else
-    execute ":silent !dwre debug " . join(g:DWREBreakpoints)
-    execute ":redraw!"
+    if has("gui_running")
+      execute ":silent !osascript -e 'tell app \"Terminal\"\do script \"cd " . getcwd() . "; dwre debug ". join(g:DWREBreakpoints) ."\"\activate\end tell'"
+    else 
+      execute ":silent !dwre debug " . join(g:DWREBreakpoints)
+      execute ":redraw!"
+    end
   end
 endfunction
 
