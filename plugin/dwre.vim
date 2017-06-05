@@ -35,21 +35,21 @@ function! DwreDebug(...)
     let g:DWREBreakpoints = []
   end  
   if a:0 == 1
-    if has("gui_running")
+    if has("gui_macvim")
       execute ":silent !osascript -e 'tell app \"Terminal\"\do script \"cd " . getcwd() . "; dwre --env " . a:1 . " debug ". join(g:DWREBreakpoints) ."\"\activate\end tell'"
     else
       execute ":silent !dwre --env " . a:1 . " debug " . join(g:DWREBreakpoints)
       execute ":redraw!"
     end
   elseif a:0 == 2
-    if has("gui_running")
+    if has("gui_macvim")
       execute ":silent !osascript -e 'tell app \"Terminal\"\do script \"cd " . getcwd() . "; dwre --project " . a:1 . " --env " . a:2 . " debug ". join(g:DWREBreakpoints) ."\"\activate\end tell'"
     else
       execute ":silent !dwre --project " . a:1 . " --env " . a:2 . " debug " . join(g:DWREBreakpoints)
       execute ":redraw!"
     end
   else
-    if has("gui_running")
+    if has("gui_macvim")
       execute ":silent !osascript -e 'tell app \"Terminal\"\do script \"cd " . getcwd() . "; dwre debug ". join(g:DWREBreakpoints) ."\"\activate\end tell'"
     else 
       execute ":silent !dwre debug " . join(g:DWREBreakpoints)
