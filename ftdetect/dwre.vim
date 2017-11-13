@@ -1,7 +1,10 @@
 fun! s:SelectDSSCRIPT()
   let n = 1
+  if expand('%:p') =~ '\(cartridge\/controllers\)\|\(cartridge\/scripts\)'
+    set ft=dsscript
+    return
+  endif
   while n < 100 && n <= line("$")
-    " check for jinja
     if getline(n) =~ '\(dw\/\w\{-\}\/\w*\)\|\(guard\.ensure\)\|\(cartridge\/scripts\)'
       set ft=dsscript
       return
