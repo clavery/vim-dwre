@@ -19,6 +19,9 @@ syn region  javaScript start=+<isscript\_[^>]*>+ keepend end=+</isscript>+me=s-1
 syn region ismlExprBlock matchgroup=ismlExprDelim start=/${-\?/ end=/-\?}/ contains=@htmlJavaScript containedin=htmlString, htmlTag
 hi link ismlExprDelim Constant
 
+syn region ismlComment start=+<iscomment>+ keepend end=+</iscomment>+ containedin=htmlString, htmlTag
+hi link ismlComment Comment
+
 syn keyword ismlTagName contained isscript iscomment iscontent isinclude isloop isredirect
 syn keyword ismlTagName contained isprint isset iscache isdecorate isif iselse iselseif
 syn keyword ismlTagName contained isreplace isslot
